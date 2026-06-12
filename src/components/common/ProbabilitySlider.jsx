@@ -1,3 +1,5 @@
+import styles from './ProbabilitySlider.module.css';
+
 export default function ProbabilitySlider({
   id,
   label,
@@ -6,8 +8,8 @@ export default function ProbabilitySlider({
   step = 0.01,
 }) {
   return (
-    <div className="probability-slider">
-      <div className="probability-slider__header">
+    <div className={styles.root}>
+      <div className={styles.header}>
         <label htmlFor={id}>{label}</label>
         <output htmlFor={id}>{value.toFixed(2)}</output>
       </div>

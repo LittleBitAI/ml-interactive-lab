@@ -95,39 +95,9 @@
   color: #245fc4;
 }
 
-.reset-button:focus-visible,
-.probability-slider input:focus-visible {
+.reset-button:focus-visible {
   outline: 3px solid rgba(57, 119, 232, 0.25);
   outline-offset: 3px;
-}
-
-.probability-slider {
-  margin-bottom: 22px;
-}
-
-.probability-slider__header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 9px;
-}
-
-.probability-slider label {
-  font-size: 0.93rem;
-  line-height: 1.4;
-}
-
-.probability-slider output {
-  min-width: 44px;
-  text-align: right;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.probability-slider input[type='range'] {
-  width: 100%;
-  accent-color: var(--accent);
-  cursor: pointer;
 }
 
 .formula-note {
@@ -182,49 +152,6 @@
 .result-card small {
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
-}
-
-.probability-chart {
-  margin-top: 22px;
-}
-
-.probability-chart__canvas {
-  width: 100%;
-  height: 140px;
-}
-
-.probability-chart__legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px 16px;
-  margin-top: 3px;
-  color: var(--text-muted);
-  font-size: 0.78rem;
-}
-
-.probability-chart__legend span {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-}
-
-.legend-dot--from-a {
-  background: #4f8ff7;
-}
-
-.legend-dot--from-not-a {
-  background: #66c6a4;
-}
-
-.legend-dot--no-b {
-  border: 1px solid #cbd5e1;
-  background: #e5e7eb;
 }
 
 .calculation-box {

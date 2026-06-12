@@ -1,0 +1,33 @@
+.root {
+  margin-bottom: 22px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 9px;
+}
+
+.root label {
+  font-size: 0.93rem;
+  line-height: 1.4;
+}
+
+.root output {
+  min-width: 44px;
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.root input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.root input:focus-visible {
+  outline: 3px solid rgba(57, 119, 232, 0.25);
+  outline-offset: 3px;
+}

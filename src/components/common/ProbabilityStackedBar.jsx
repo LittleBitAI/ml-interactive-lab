@@ -8,6 +8,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import styles from './ProbabilityStackedBar.module.css';
+
 function formatPercent(value) {
   return `${(value * 100).toFixed(1)}%`;
 }
@@ -33,8 +35,8 @@ export default function ProbabilityStackedBar({
   ];
 
   return (
-    <div className="probability-chart">
-      <div className="probability-chart__canvas">
+    <div className={styles.root}>
+      <div className={styles.canvas}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
@@ -77,17 +79,17 @@ export default function ProbabilityStackedBar({
         </ResponsiveContainer>
       </div>
 
-      <div className="probability-chart__legend" aria-label="그래프 범례">
+      <div className={styles.legend} aria-label="그래프 범례">
         <span>
-          <i className="legend-dot legend-dot--from-a" />
+          <i className={`${styles.legendDot} ${styles.fromA}`} />
           A에서 나온 B
         </span>
         <span>
-          <i className="legend-dot legend-dot--from-not-a" />
+          <i className={`${styles.legendDot} ${styles.fromNotA}`} />
           A가 아닌 경우에서 나온 B
         </span>
         <span>
-          <i className="legend-dot legend-dot--no-b" />
+          <i className={`${styles.legendDot} ${styles.noB}`} />
           B가 발생하지 않음
         </span>
       </div>
