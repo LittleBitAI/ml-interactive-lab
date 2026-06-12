@@ -1,11 +1,8 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
+import { widgetRegistry } from './data/widgetRegistry.js';
 import HomePage from './pages/HomePage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
-
-const BayesTheoremPage = lazy(
-  () => import('./widgets/probability/BayesTheoremPage.jsx'),
-);
 
 function PageLoading() {
   return (
@@ -20,10 +17,17 @@ export default function App() {
     <Suspense fallback={<PageLoading />}>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/widgets/probability/bayes-theorem"
-          element={<BayesTheoremPage />}
-        />
+        {widgetRegistry.map((widget) => {
+          const WidgetPage = widget.component;
+
+          return (
+            <Route
+              key={widget.id}
+              path={widget.path}
+              element={<WidgetPage />}
+            />
+          );
+        })}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>

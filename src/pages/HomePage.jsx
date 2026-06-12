@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
-import { widgetCatalog } from '../data/widgetCatalog.js';
+import { widgetRegistry } from '../data/widgetRegistry.js';
 
 export default function HomePage() {
-  const publishedWidgets = widgetCatalog.filter(
+  const publishedWidgets = widgetRegistry.filter(
     (widget) => widget.status === 'published',
   );
 
