@@ -13,6 +13,20 @@ export const widgetRegistry = [
       () => import('../widgets/probability/BayesTheoremPage.jsx'),
     ),
   },
+  {
+    id: 'expected-value',
+    title: '기대값 직관 탐색기',
+    description:
+      '두 결과의 값과 확률을 조절하며 기대값이 확률이 큰 결과 쪽으로 이동하는 과정을 확인합니다.',
+    subject: 'probability',
+    category: '확률',
+    path: '/widgets/probability/expected-value',
+    tags: ['기대값', '확률', '가중평균'],
+    status: 'published',
+    component: lazy(
+      () => import('../widgets/probability/ExpectedValuePage.jsx'),
+    ),
+  },
 ];
 
 if (import.meta.env.DEV) {
