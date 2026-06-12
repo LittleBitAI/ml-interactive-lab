@@ -483,18 +483,27 @@ export default function DotProductProjectionPage() {
               geometry={geometry}
             />
 
-            <p
-              className={styles['text-summary']}
-              aria-live="polite"
-              aria-atomic="true"
-            >
-              |a| = {formatValue(magnitudeA)}, |b| = {formatValue(magnitudeB)},
-              θ = {formatValue(thetaDegrees)}°.{' '}
-              {projectionIsDefined
-                ? `b의 부호 있는 정사영은 ${formatValue(signedProjection)}이고`
-                : 'a가 영벡터라 a 방향 정사영은 정의되지 않으며'}{' '}
-              내적은 {formatValue(dotProduct)}입니다.
-            </p>
+            <div className={styles['visual-information']}>
+              <p
+                className={styles['text-summary']}
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                |a| = {formatValue(magnitudeA)}, |b| = {formatValue(magnitudeB)},
+                θ = {formatValue(thetaDegrees)}°.{' '}
+                {projectionIsDefined
+                  ? `b의 부호 있는 정사영은 ${formatValue(signedProjection)}이고`
+                  : 'a가 영벡터라 a 방향 정사영은 정의되지 않으며'}{' '}
+                내적은 {formatValue(dotProduct)}입니다.
+              </p>
+
+              <div
+                className={`${styles.interpretation} ${styles[`interpretation--${interpretation.key}`]}`}
+              >
+                <strong>현재 해석</strong>
+                <p>{interpretation.text}</p>
+              </div>
+            </div>
 
             <DotProductBar dotProduct={dotProduct} signState={signState} />
           </section>
@@ -549,13 +558,6 @@ export default function DotProductProjectionPage() {
                   않습니다. 영벡터와의 내적은 <strong>0</strong>입니다.
                 </p>
               )}
-            </div>
-
-            <div
-              className={`${styles.interpretation} ${styles[`interpretation--${interpretation.key}`]}`}
-            >
-              <strong>현재 해석</strong>
-              <p>{interpretation.text}</p>
             </div>
           </section>
         </div>
