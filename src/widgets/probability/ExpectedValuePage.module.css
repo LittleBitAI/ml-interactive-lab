@@ -513,30 +513,26 @@
 
 @media (max-width: 1000px) {
   .body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   }
 
-  .controls {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
+  .controls,
+  .results {
+    padding: 22px 20px;
   }
 
-  .numeric-control {
-    grid-template-columns: minmax(160px, 0.9fr) minmax(0, 1.4fr) 150px;
-    align-items: center;
+  .panel {
+    padding: 18px;
   }
 
-  .numeric-control__heading {
-    display: grid;
-    gap: 2px;
+  .marker {
+    width: 94px;
   }
 
-  .numeric-control__heading output {
-    text-align: left;
-  }
-
-  .numeric-control__exact {
-    justify-content: flex-end;
+  .marker__label {
+    min-width: 0;
+    max-width: 94px;
+    white-space: normal;
   }
 }
 
@@ -563,6 +559,26 @@
 
   .numeric-control__exact {
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 680px) {
+  .controls,
+  .results {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .marker {
+    width: 76px;
+  }
+
+  .marker__label {
+    max-width: 76px;
   }
 }
 
@@ -606,21 +622,22 @@
     height: 265px;
   }
 
-  .marker {
-    width: 100px;
-  }
-
-  .marker__label {
-    min-width: 0;
-    max-width: 100px;
-    white-space: normal;
-  }
-
   .simulation-stats {
     grid-template-columns: 1fr;
   }
 
   .chart-canvas {
     height: 260px;
+  }
+}
+
+@media (max-width: 540px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
   }
 }

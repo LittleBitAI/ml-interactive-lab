@@ -54,7 +54,7 @@
 
 .bayes-widget__body {
   display: grid;
-  grid-template-columns: minmax(300px, 0.85fr) minmax(380px, 1.15fr);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
 }
 
 .bayes-widget__header > *,
@@ -204,14 +204,8 @@
 }
 
 @media (max-width: 720px) {
-  .bayes-widget__header,
-  .bayes-widget__body {
+  .bayes-widget__header {
     grid-template-columns: 1fr;
-  }
-
-  .control-panel {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -240,18 +234,6 @@
     padding: 20px;
   }
 
-  .result-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .calculation-box p {
-    display: grid;
-    gap: 3px;
-  }
-
-  .calculation-box strong {
-    text-align: left;
-  }
 }
 
 /* Notion 임베드에서 세로 공간을 줄이기 위한 압축 모드 */
@@ -284,6 +266,29 @@
   line-height: 1.55;
 }
 
+@media (max-width: 800px) {
+  .control-panel,
+  .result-panel,
+  .embed-mode .control-panel,
+  .embed-mode .result-panel {
+    padding: 22px 20px;
+  }
+
+  .embed-mode .bayes-widget__body {
+    gap: 0;
+  }
+
+  .result-card,
+  .formula-note,
+  .calculation-box {
+    padding: 14px;
+  }
+
+  .calculation-box p {
+    gap: 10px;
+  }
+}
+
 @media (max-width: 640px) {
   .embed-mode .bayes-widget__header,
   .embed-mode .control-panel,
@@ -293,6 +298,32 @@
 
   .embed-mode .bayes-widget__header h1 {
     font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .result-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .calculation-box p {
+    display: grid;
+    gap: 3px;
+  }
+
+  .calculation-box strong {
+    text-align: left;
+  }
+}
+
+@media (max-width: 540px) {
+  .bayes-widget__body {
+    grid-template-columns: 1fr;
+  }
+
+  .control-panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
   }
 }
 
