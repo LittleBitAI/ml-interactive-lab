@@ -96,7 +96,7 @@ export default function BayesTheoremPage() {
     <main
       className={
         isEmbedMode
-          ? `${styles['bayes-page']} ${styles['bayes-page--embed']}`
+          ? `${styles['bayes-page']} ${styles['bayes-page--embed']} ${styles['embed-mode']}`
           : styles['bayes-page']
       }
     >

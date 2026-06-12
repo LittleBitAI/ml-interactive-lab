@@ -57,6 +57,12 @@
   grid-template-columns: minmax(300px, 0.85fr) minmax(380px, 1.15fr);
 }
 
+.bayes-widget__header > *,
+.control-panel,
+.result-panel {
+  min-width: 0;
+}
+
 .control-panel,
 .result-panel {
   padding: 28px 30px;
@@ -197,7 +203,7 @@
   line-height: 1.65;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .bayes-widget__header,
   .bayes-widget__body {
     grid-template-columns: 1fr;
@@ -263,7 +269,8 @@
   gap: 20px;
 }
 
-.embed-mode .bayes-widget__panel {
+.embed-mode .control-panel,
+.embed-mode .result-panel {
   padding: 24px 28px;
 }
 
@@ -279,7 +286,8 @@
 
 @media (max-width: 640px) {
   .embed-mode .bayes-widget__header,
-  .embed-mode .bayes-widget__panel {
+  .embed-mode .control-panel,
+  .embed-mode .result-panel {
     padding: 20px;
   }
 
