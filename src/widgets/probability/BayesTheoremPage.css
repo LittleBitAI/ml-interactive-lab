@@ -262,7 +262,7 @@
   line-height: 1.65;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 640px) {
   .bayes-widget__header,
   .bayes-widget__body {
     grid-template-columns: 1fr;
@@ -311,4 +311,48 @@
   .calculation-box strong {
     text-align: left;
   }
+}
+
+/* Notion 임베드에서 세로 공간을 줄이기 위한 압축 모드 */
+.embed-mode .bayes-widget {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.embed-mode .bayes-widget__header {
+  padding: 24px 28px;
+  gap: 20px;
+}
+
+.embed-mode .bayes-widget__body {
+  gap: 20px;
+}
+
+.embed-mode .bayes-widget__panel {
+  padding: 24px 28px;
+}
+
+.embed-mode .bayes-widget__header h1 {
+  margin-bottom: 8px;
+  font-size: 28px;
+}
+
+.embed-mode .bayes-widget__header p {
+  margin-bottom: 0;
+  line-height: 1.55;
+}
+
+@media (max-width: 640px) {
+  .embed-mode .bayes-widget__header,
+  .embed-mode .bayes-widget__panel {
+    padding: 20px;
+  }
+
+  .embed-mode .bayes-widget__header h1 {
+    font-size: 24px;
+  }
+}
+
+.bayes-page--embed .bayes-widget__description {
+  display: none;
 }
