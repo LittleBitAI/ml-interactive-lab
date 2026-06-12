@@ -27,6 +27,23 @@ export const widgetRegistry = [
       () => import('../widgets/probability/ExpectedValuePage.jsx'),
     ),
   },
+  {
+    id: 'dot-product-projection',
+    title: '내적과 정사영 탐색기',
+    description:
+      '두 벡터의 크기와 사이각을 조절하며 내적의 부호와 크기가 정사영에서 어떻게 만들어지는지 확인합니다.',
+    subject: 'linear-algebra',
+    category: '선형대수',
+    path: '/widgets/linear-algebra/dot-product-projection',
+    tags: ['내적', '벡터', '정사영', '코사인'],
+    status: 'published',
+    component: lazy(
+      () =>
+        import(
+          '../widgets/linear-algebra/DotProductProjectionPage.jsx'
+        ),
+    ),
+  },
 ];
 
 if (import.meta.env.DEV) {
