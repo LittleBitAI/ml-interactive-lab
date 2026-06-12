@@ -25,7 +25,7 @@ const evidenceFormula = String.raw`
   =
   P(B\mid A)P(A)
   +
-  P(B\mid \neg A)P(\neg A)
+  P(B\mid A^c)P(A^c)
 `;
 
 function formatProbability(value) {
@@ -169,7 +169,7 @@ export default function BayesTheoremPage() {
 
             <ProbabilitySlider
               id="p-b-given-not-a"
-              label="P(B | ¬A) — A가 아닐 때 B가 나타날 확률"
+              label="P(B | Aᶜ) — A가 아닐 때 B가 나타날 확률"
               value={pBGivenNotA}
               onChange={setPBGivenNotA}
             />
