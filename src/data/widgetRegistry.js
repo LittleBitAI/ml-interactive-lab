@@ -44,6 +44,20 @@ export const widgetRegistry = [
         ),
     ),
   },
+  {
+    id: 'likelihood-mle',
+    title: '가능도·로그가능도·최대가능도추정 탐색기',
+    description:
+      '같은 파라미터를 가능도와 로그가능도로 평가하고, 두 표현의 최대점이 동일함을 단계별로 확인합니다.',
+    subject: 'statistics',
+    category: '통계',
+    path: '/widgets/statistics/likelihood-mle',
+    tags: ['가능도', '로그가능도', '최대가능도추정', 'MLE'],
+    status: 'published',
+    component: lazy(
+      () => import('../widgets/statistics/LikelihoodMlePage.jsx'),
+    ),
+  },
 ];
 
 if (import.meta.env.DEV) {

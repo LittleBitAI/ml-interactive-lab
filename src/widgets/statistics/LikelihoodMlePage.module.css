@@ -1,0 +1,769 @@
+.page {
+  width: min(1240px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 20px 0 36px;
+}
+
+.page--embed {
+  width: 100%;
+  padding: 0;
+}
+
+.topbar {
+  margin-bottom: 12px;
+}
+
+.home-link {
+  color: #245fc4;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home-link:hover {
+  text-decoration: underline;
+}
+
+.widget {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.page--embed .widget {
+  min-height: 100vh;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.42fr);
+  gap: 28px;
+  align-items: center;
+  padding: 28px 30px;
+  border-bottom: 1px solid var(--border);
+}
+
+.header > *,
+.workspace > *,
+.chart-card,
+.chart-heading > *,
+.controls-title > *,
+.stability-results > * {
+  min-width: 0;
+}
+
+.eyebrow,
+.kicker {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.introduction h1 {
+  margin: 6px 0 9px;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+}
+
+.introduction > p:last-child {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.stage-control {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #c9d8f4;
+  border-radius: 16px;
+  background: #f4f8ff;
+}
+
+.stage-control span {
+  color: #174d9b;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.stage-control button,
+.controls-title button,
+.stability-toggle {
+  border: 0;
+  cursor: pointer;
+}
+
+.stage-control button {
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: #245fc4;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  grid-template-areas:
+    'controls graph'
+    'calculation interpretation'
+    'stability stability';
+  gap: 18px;
+  padding: 24px;
+  background: #f7f9fc;
+}
+
+.panel,
+.chart-card,
+.comparison-wrap {
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--surface);
+  box-shadow: 0 5px 16px rgba(31, 48, 73, 0.04);
+}
+
+.panel {
+  padding: 20px;
+}
+
+.controls {
+  grid-area: controls;
+}
+
+.graph {
+  grid-area: graph;
+  min-width: 0;
+}
+
+.calculation {
+  grid-area: calculation;
+}
+
+.interpretation {
+  grid-area: interpretation;
+}
+
+.stability {
+  grid-area: stability;
+}
+
+.controls-title,
+.chart-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.section-heading h2,
+.chart-heading h2 {
+  margin: 3px 0 0;
+  font-size: 1.05rem;
+}
+
+.controls-title button {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: #245fc4;
+  font-weight: 700;
+}
+
+.observation-summary,
+.chart-summary,
+.boundary-note,
+.interpretation > p,
+.stability-content > p,
+.log-space-note {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.observation-summary {
+  margin: 18px 0 10px;
+}
+
+.coin-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.coin {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  max-width: 48px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.coin--head {
+  background: #eaf3ff;
+  color: #1557b0;
+}
+
+.coin--tail {
+  border-style: dashed;
+  background: #fff4e8;
+  color: #995411;
+}
+
+.observed-values,
+.maximum-list,
+.stability-results {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+
+.observed-values {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.observed-values div,
+.maximum-list div,
+.stability-results div {
+  min-width: 0;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.observed-values dt,
+.maximum-list dt,
+.stability-results dt {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.observed-values dd,
+.maximum-list dd,
+.stability-results dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.probability-control {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.control-heading {
+  display: grid;
+  gap: 3px;
+}
+
+.control-heading label {
+  font-weight: 800;
+}
+
+.control-heading output {
+  color: #174d9b;
+  font-size: 0.88rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.probability-control input[type='range'],
+.sample-size-control input[type='range'] {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.probability-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 10px;
+  align-items: center;
+  font-size: 0.78rem;
+}
+
+.probability-details span {
+  padding: 7px 8px;
+  border-radius: 8px;
+  background: #f3f6fa;
+  font-weight: 700;
+}
+
+.probability-details label {
+  color: var(--text-muted);
+}
+
+.probability-details input {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-card {
+  min-width: 0;
+  padding: 20px;
+}
+
+.current-evaluation {
+  display: grid;
+  flex: 0 0 auto;
+  justify-items: end;
+}
+
+.current-evaluation span {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.current-evaluation strong {
+  color: #174d9b;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-summary {
+  margin: 12px 0 0;
+}
+
+.chart-canvas {
+  width: 100%;
+  min-width: 0;
+  height: 340px;
+  margin-top: 8px;
+}
+
+.chart-card--compact .chart-canvas {
+  height: 270px;
+}
+
+.chart-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.boundary-note {
+  margin: 9px 0 0;
+  padding: 9px 11px;
+  border-radius: 9px;
+  background: #fff7ed;
+  color: #8a4b0f;
+}
+
+.comparison-wrap {
+  margin-top: 18px;
+  padding: 12px;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.76rem;
+  text-align: left;
+}
+
+.comparison-table caption {
+  padding: 3px 4px 10px;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-align: left;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 9px 8px;
+  overflow-wrap: anywhere;
+  border-top: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+
+.comparison-table thead th {
+  color: #174d9b;
+  font-size: 0.7rem;
+}
+
+.formula {
+  margin-top: 14px;
+  color: #4c1d95;
+  font-size: 1rem;
+}
+
+.substituted-formula {
+  margin-top: 8px;
+  padding: 11px;
+  border-radius: 10px;
+  background: #f7f2ff;
+  color: #4c1d95;
+  font-size: 0.82rem;
+}
+
+.product-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.product-groups div {
+  display: grid;
+  gap: 5px;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.76rem;
+}
+
+.product-groups span {
+  overflow-wrap: anywhere;
+  color: #174d9b;
+  font-weight: 800;
+}
+
+.product-groups small {
+  color: var(--text-muted);
+}
+
+.transformation {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #eef4ff;
+  color: #174d9b;
+}
+
+.transformation span {
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.core-note {
+  margin: 12px 0 0;
+  color: #4c1d95;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.compact-formulas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mle-formula {
+  grid-column: 1 / -1;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff1f0;
+  color: #9b1c13;
+}
+
+.maximum-list {
+  grid-template-columns: 1fr;
+}
+
+.maximum-list div:last-child {
+  background: #fff1f0;
+  color: #9b1c13;
+}
+
+.interpretation {
+  border-left: 5px solid #3977e8;
+}
+
+.interpretation--near {
+  border-left-color: #7c3aed;
+}
+
+.interpretation--maximum {
+  border-left-color: #b42318;
+}
+
+.interpretation > p {
+  margin: 14px 0 0;
+}
+
+.conclusion {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 11px;
+  background: #edf4ff;
+  color: #174d9b;
+  line-height: 1.6;
+}
+
+.conclusion p {
+  margin: 7px 0 0;
+}
+
+.stability {
+  padding: 0;
+  overflow: hidden;
+}
+
+.stability-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  padding: 17px 20px;
+  background: var(--surface);
+  color: #174d9b;
+  text-align: left;
+}
+
+.stability-toggle span:first-child {
+  display: grid;
+  gap: 2px;
+}
+
+.stability-toggle small {
+  color: var(--text-muted);
+}
+
+.stability-content {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.stability-content > p {
+  margin: 16px 0 0;
+}
+
+.stability-caution {
+  color: #8a4b0f !important;
+}
+
+.sample-size-control {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 11px;
+  background: #f8fafc;
+}
+
+.sample-size-control > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 800;
+}
+
+.sample-size-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+.stability-results {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.log-space-note {
+  margin: 14px 0 0;
+}
+
+.stage-control button:hover,
+.stage-control button:focus-visible {
+  background: #174d9b;
+}
+
+.controls-title button:hover,
+.stability-toggle:hover {
+  background: #f3f7ff;
+}
+
+.stage-control button:focus-visible,
+.controls-title button:focus-visible,
+.stability-toggle:focus-visible,
+.probability-control input:focus-visible,
+.sample-size-control input:focus-visible,
+.home-link:focus-visible {
+  outline: 3px solid rgba(57, 119, 232, 0.25);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.45fr);
+    padding: 24px;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .panel,
+  .chart-card {
+    padding: 16px;
+  }
+
+  .chart-canvas {
+    height: 310px;
+  }
+
+  .stability {
+    padding: 0;
+  }
+
+  .stability-results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) minmax(200px, 0.55fr);
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(215px, 0.72fr) minmax(0, 1.28fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .panel,
+  .chart-card {
+    padding: 13px;
+    border-radius: 13px;
+  }
+
+  .stability {
+    padding: 0;
+  }
+
+  .observed-values,
+  .product-groups,
+  .compact-formulas {
+    grid-template-columns: 1fr;
+  }
+
+  .mle-formula {
+    grid-column: auto;
+  }
+
+  .chart-heading {
+    display: grid;
+  }
+
+  .current-evaluation {
+    justify-items: start;
+  }
+
+  .chart-canvas,
+  .chart-card--compact .chart-canvas {
+    height: 260px;
+  }
+}
+
+@media (max-width: 560px) {
+  .page {
+    width: min(100% - 16px, 1240px);
+    padding-top: 8px;
+  }
+
+  .page--embed {
+    width: 100%;
+    padding: 0;
+  }
+
+  .widget {
+    border-radius: 15px;
+  }
+
+  .page--embed .widget {
+    border-radius: 0;
+  }
+
+  .header {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'graph'
+      'controls'
+      'calculation'
+      'interpretation'
+      'stability';
+    padding: 12px;
+  }
+
+  .coin-grid {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+  .coin {
+    font-size: 0.68rem;
+  }
+
+  .observed-values {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .chart-canvas {
+    height: 285px;
+  }
+}
+
+@media (max-width: 400px) {
+  .header,
+  .workspace {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .panel,
+  .chart-card {
+    padding: 11px;
+  }
+
+  .stability {
+    padding: 0;
+  }
+
+  .observed-values,
+  .probability-details,
+  .stability-results {
+    grid-template-columns: 1fr;
+  }
+
+  .coin-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .chart-canvas,
+  .chart-card--compact .chart-canvas {
+    height: 260px;
+  }
+}
