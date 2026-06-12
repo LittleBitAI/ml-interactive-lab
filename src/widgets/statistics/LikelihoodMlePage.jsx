@@ -22,14 +22,17 @@ import {
   STABILITY_SAMPLE_SIZES,
   calculateLikelihood,
   calculateLogLikelihood,
+  calculateRelativeScores,
   calculateStabilityState,
   formatChartValue,
   formatLikelihood,
   formatLogLikelihood,
   formatPercent,
   formatProbability,
+  formatRelativeScore,
   generateLikelihoodCurve,
   generateLogLikelihoodCurve,
+  generateRelativeComparisonCurve,
   getInterpretationState,
   getSafeLogChartValue,
   normalizeProbability,
@@ -69,6 +72,11 @@ const observations = [
 const likelihoodFormula = String.raw`L(p) = p^7(1-p)^3`;
 const logLikelihoodFormula = String.raw`\ell(p) = 7\log p + 3\log(1-p)`;
 const mleFormula = String.raw`\hat p_{\mathrm{MLE}} = \frac{7}{10} = 0.7`;
+const relativeComparisonFormula = String.raw`
+  \frac{L(p)}{L(\hat p_{\mathrm{MLE}})}
+  =
+  \exp\left(\ell(p)-\ell(\hat p_{\mathrm{MLE}})\right)
+`;
 
 function updateProbability(setValue, rawValue) {
   if (rawValue === '') {
@@ -283,6 +291,182 @@ function EvaluationChart({
           표시했습니다.
         </p>
       )}
+    </section>
+  );
+}
+
+function RelativeComparisonChart({
+  p,
+  likelihood,
+  logLikelihood,
+  relativeScores,
+  curve,
+}) {
+  const currentRelativeScore = relativeScores.relativeFromLog;
+
+  return (
+    <section
+      className={styles['chart-card']}
+      aria-labelledby="relative-comparison-chart-title"
+    >
+      <div className={styles['chart-heading']}>
+        <div>
+          <p className={styles.kicker}>같은 기준으로 비교</p>
+          <h2 id="relative-comparison-chart-title">
+            최대값 대비 상대 적합도
+          </h2>
+        </div>
+        <div className={styles['current-evaluation']}>
+          <span>현재 상대 적합도</span>
+          <strong>{formatRelativeScore(currentRelativeScore)}</strong>
+        </div>
+      </div>
+
+      <p className={styles['relative-explanation']}>
+        가능도를 최대값으로 나눈 결과와, 로그가능도의 차이를 다시 지수화한
+        결과는 같습니다. 두 표현은 p=0.70에서 함께 최대가 됩니다.
+      </p>
+      <MathFormula
+        formula={relativeComparisonFormula}
+        className={styles['relative-equation']}
+      />
+      <p className={styles['chart-summary']}>
+        두 상대 곡선은 모든 p에서 일치합니다. 현재 p=
+        {formatProbability(p)}의 상대 적합도는{' '}
+        {formatRelativeScore(currentRelativeScore)}이고, 두 곡선의 공통
+        최대점은 p=0.70에서 1입니다.
+      </p>
+
+      <div className={styles['relative-legend']} aria-label="상대 적합도 그래프 범례">
+        <span>
+          <i className={styles['legend-solid']} aria-hidden="true" />
+          가능도 기준 상대값 · 굵은 실선
+        </span>
+        <span>
+          <i className={styles['legend-dashed']} aria-hidden="true" />
+          로그가능도 기준 상대값 · 가는 점선
+        </span>
+        <strong>두 선은 같은 위치에서 겹칩니다.</strong>
+      </div>
+
+      <div
+        className={`${styles['chart-canvas']} ${styles['relative-chart-canvas']}`}
+        aria-hidden="true"
+      >
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={curve}
+            margin={{ top: 32, right: 24, bottom: 22, left: 4 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="p"
+              type="number"
+              domain={[0, 1]}
+              ticks={[0, 0.25, 0.5, 0.75, 1]}
+              tickFormatter={(value) => Number(value).toFixed(2)}
+              label={{
+                value: '가정한 앞면 확률 p',
+                position: 'insideBottom',
+                offset: -14,
+              }}
+            />
+            <YAxis
+              domain={[0, 1]}
+              ticks={[0, 0.25, 0.5, 0.75, 1]}
+              tickFormatter={(value) => Number(value).toFixed(2)}
+              width={58}
+              label={{
+                value: '최대값 대비 상대 적합도',
+                angle: -90,
+                position: 'insideLeft',
+              }}
+            />
+            <Tooltip
+              formatter={(value, name) => [
+                formatRelativeScore(Number(value)),
+                name,
+              ]}
+              labelFormatter={(value) => `p = ${Number(value).toFixed(3)}`}
+            />
+            <ReferenceLine
+              x={p}
+              stroke="#245fc4"
+              strokeDasharray="6 4"
+              strokeWidth={2}
+            />
+            <ReferenceLine
+              x={MLE_P}
+              stroke="#b42318"
+              strokeDasharray="3 3"
+              strokeWidth={2}
+              label={{
+                value: '두 표현 공통 최대 p=0.70',
+                position: 'insideTopRight',
+                fill: '#9b1c13',
+                fontSize: 12,
+              }}
+            />
+            <Line
+              type="monotone"
+              dataKey="relativeLikelihood"
+              name="가능도 기준 상대값"
+              stroke="#9bbcf5"
+              strokeWidth={7}
+              dot={false}
+              isAnimationActive
+              animationDuration={320}
+            />
+            <Line
+              type="monotone"
+              dataKey="relativeFromLog"
+              name="로그가능도 기준 상대값"
+              stroke="#5b21b6"
+              strokeDasharray="7 5"
+              strokeWidth={2.5}
+              dot={false}
+              isAnimationActive
+              animationDuration={320}
+            />
+            <ReferenceDot
+              x={p}
+              y={currentRelativeScore}
+              r={6}
+              fill="#ffffff"
+              stroke="#245fc4"
+              strokeWidth={3}
+            />
+            <ReferenceDot
+              x={MLE_P}
+              y={1}
+              r={7}
+              fill="#fff1f0"
+              stroke="#b42318"
+              strokeWidth={3}
+              label={{
+                value: '공통 최대점',
+                position: 'top',
+                fill: '#9b1c13',
+                fontSize: 12,
+              }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      <p className={styles['raw-values-label']}>
+        정규화하지 않은 원래 척도의 현재 평가값
+      </p>
+      <dl className={styles['stage-three-raw-values']}>
+        <div>
+          <dt>현재 가능도 L(p)</dt>
+          <dd>{formatLikelihood(likelihood)}</dd>
+        </div>
+        <div>
+          <dt>현재 로그가능도 ℓ(p)</dt>
+          <dd>{formatLogLikelihood(logLikelihood)}</dd>
+        </div>
+      </dl>
     </section>
   );
 }
@@ -559,8 +743,13 @@ export default function LikelihoodMlePage() {
   const [isStabilityOpen, setIsStabilityOpen] = useState(false);
   const likelihoodCurve = useMemo(() => generateLikelihoodCurve(), []);
   const logLikelihoodCurve = useMemo(() => generateLogLikelihoodCurve(), []);
+  const relativeComparisonCurve = useMemo(
+    () => generateRelativeComparisonCurve(),
+    [],
+  );
   const likelihood = calculateLikelihood(p);
   const logLikelihood = calculateLogLikelihood(p);
+  const relativeScores = calculateRelativeScores(p);
   const interpretation = getInterpretationState(p);
   const stageContent = STAGE_CONTENT[stage];
 
@@ -643,24 +832,13 @@ export default function LikelihoodMlePage() {
 
           <div className={styles.graph}>
             {stage === 'mle' ? (
-              <div className={styles['chart-stack']}>
-                <EvaluationChart
-                  metric="likelihood"
-                  p={p}
-                  currentValue={likelihood}
-                  curve={likelihoodCurve}
-                  revealMle
-                  compact
-                />
-                <EvaluationChart
-                  metric="log-likelihood"
-                  p={p}
-                  currentValue={logLikelihood}
-                  curve={logLikelihoodCurve}
-                  revealMle
-                  compact
-                />
-              </div>
+              <RelativeComparisonChart
+                p={p}
+                likelihood={likelihood}
+                logLikelihood={logLikelihood}
+                relativeScores={relativeScores}
+                curve={relativeComparisonCurve}
+              />
             ) : (
               <EvaluationChart
                 metric={stage}

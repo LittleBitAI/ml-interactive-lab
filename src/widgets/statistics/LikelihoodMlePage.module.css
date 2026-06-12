@@ -178,6 +178,7 @@
 .observation-summary,
 .chart-summary,
 .boundary-note,
+.relative-explanation,
 .interpretation > p,
 .stability-content > p,
 .log-space-note {
@@ -350,13 +351,97 @@
   margin-top: 8px;
 }
 
-.chart-card--compact .chart-canvas {
-  height: 270px;
+.relative-explanation {
+  margin: 14px 0 0;
+  padding: 11px 13px;
+  border-radius: 10px;
+  background: #f7f2ff;
+  color: #4c1d95;
+  font-weight: 700;
 }
 
-.chart-stack {
+.relative-equation {
+  margin-top: 8px;
+  color: #4c1d95;
+  font-size: 0.88rem;
+}
+
+.relative-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 0.72rem;
+}
+
+.relative-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.relative-legend i {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 34px;
+}
+
+.legend-solid {
+  border-top: 7px solid #9bbcf5;
+}
+
+.legend-dashed {
+  border-top: 3px dashed #5b21b6;
+}
+
+.relative-legend strong {
+  color: #4c1d95;
+}
+
+.relative-chart-canvas {
+  height: 350px;
+  margin-top: 12px;
+}
+
+.stage-three-raw-values {
   display: grid;
-  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 0;
+}
+
+.raw-values-label {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.stage-three-raw-values div {
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.stage-three-raw-values dt {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.stage-three-raw-values dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+  color: #174d9b;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
 .boundary-note {
@@ -680,7 +765,7 @@
   }
 
   .chart-canvas,
-  .chart-card--compact .chart-canvas {
+  .relative-chart-canvas {
     height: 260px;
   }
 }
@@ -763,7 +848,11 @@
   }
 
   .chart-canvas,
-  .chart-card--compact .chart-canvas {
+  .relative-chart-canvas {
     height: 260px;
+  }
+
+  .stage-three-raw-values {
+    grid-template-columns: 1fr;
   }
 }

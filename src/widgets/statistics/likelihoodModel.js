@@ -12,6 +12,7 @@ export const LOG_CHART_MINIMUM = -50;
 const LOG_CURVE_EPSILON = 0.001;
 const SLIDER_PRECISION = 0.01;
 const LOG_MIN_POSITIVE_NUMBER = Math.log(Number.MIN_VALUE);
+const RELATIVE_SCORE_TOLERANCE = 1e-12;
 
 export function clamp(value, minimum, maximum) {
   return Math.min(maximum, Math.max(minimum, value));
@@ -70,6 +71,50 @@ export function calculateMle(heads, tails) {
   return trials === 0 ? null : normalizeNumber(heads / trials);
 }
 
+export function calculateMaximumLogLikelihood(
+  heads = BASE_DATA.heads,
+  tails = BASE_DATA.tails,
+) {
+  const mle = calculateMle(heads, tails);
+  return mle === null ? 0 : calculateLogLikelihood(mle, heads, tails);
+}
+
+export function calculateRelativeScores(
+  p,
+  heads = BASE_DATA.heads,
+  tails = BASE_DATA.tails,
+) {
+  const mle = calculateMle(heads, tails);
+
+  if (mle === null) {
+    return {
+      relativeLikelihood: 1,
+      relativeFromLog: 1,
+    };
+  }
+
+  const logLikelihood = calculateLogLikelihood(p, heads, tails);
+
+  if (!Number.isFinite(logLikelihood)) {
+    return {
+      relativeLikelihood: 0,
+      relativeFromLog: 0,
+    };
+  }
+
+  const maximumLogLikelihood = calculateMaximumLogLikelihood(heads, tails);
+  const logDifference = logLikelihood - maximumLogLikelihood;
+  const relativeScore =
+    Math.abs(logDifference) <= RELATIVE_SCORE_TOLERANCE
+      ? 1
+      : clamp(Math.exp(Math.min(0, logDifference)), 0, 1);
+
+  return {
+    relativeLikelihood: relativeScore,
+    relativeFromLog: relativeScore,
+  };
+}
+
 export function generateLikelihoodCurve(sampleCount = 201) {
   return Array.from({ length: sampleCount }, (_, index) => {
     const p = index / (sampleCount - 1);
@@ -88,6 +133,18 @@ export function generateLogLikelihoodCurve(sampleCount = 201) {
     return {
       p: normalizeNumber(p),
       value: calculateLogLikelihood(p),
+    };
+  });
+}
+
+export function generateRelativeComparisonCurve(sampleCount = 201) {
+  return Array.from({ length: sampleCount }, (_, index) => {
+    const p = index / (sampleCount - 1);
+    const relativeScores = calculateRelativeScores(p);
+
+    return {
+      p: normalizeNumber(p),
+      ...relativeScores,
     };
   });
 }
@@ -134,6 +191,10 @@ export function formatChartValue(value, metric) {
   return metric === 'likelihood'
     ? formatLikelihood(value)
     : formatLogLikelihood(value);
+}
+
+export function formatRelativeScore(value) {
+  return clamp(normalizeNumber(value, 4), 0, 1).toFixed(4);
 }
 
 export function formatScientificOrder(log10Likelihood) {
