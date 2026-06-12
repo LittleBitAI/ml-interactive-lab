@@ -36,12 +36,16 @@
   border-bottom: 1px solid var(--border);
 }
 
+.bayes-widget__introduction,
+.bayes-widget__main-formula {
+}
+
 .bayes-widget__header h1 {
   margin: 5px 0 8px;
   font-size: clamp(1.7rem, 3vw, 2.4rem);
 }
 
-.bayes-widget__header p:not(.eyebrow) {
+.bayes-widget__header p:not(:global(.eyebrow)) {
   max-width: 650px;
   margin: 0;
   color: var(--text-muted);
@@ -108,7 +112,11 @@
   background: var(--surface);
 }
 
-.formula-note .math-formula {
+.formula-note__formula,
+.formula-note__description {
+}
+
+.formula-note :global(.math-formula) {
   font-size: 0.88rem;
 }
 

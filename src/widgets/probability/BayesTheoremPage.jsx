@@ -6,7 +6,7 @@ import ProbabilitySlider from '../../components/common/ProbabilitySlider.jsx';
 import ProbabilityStackedBar from '../../components/common/ProbabilityStackedBar.jsx';
 import useEmbedMode from '../../hooks/useEmbedMode.js';
 
-import './BayesTheoremPage.css';
+import styles from './BayesTheoremPage.module.css';
 
 const INITIAL_VALUES = {
   pA: 0.62,
@@ -96,12 +96,12 @@ export default function BayesTheoremPage() {
     <main
       className={
         isEmbedMode
-          ? 'bayes-page bayes-page--embed'
-          : 'bayes-page'
+          ? `${styles['bayes-page']} ${styles['bayes-page--embed']}`
+          : styles['bayes-page']
       }
     >
       {!isEmbedMode && (
-        <div className="bayes-page__topbar">
+        <div className={styles['bayes-page__topbar']}>
           <Link
             className="text-link"
             to="/"
@@ -111,9 +111,9 @@ export default function BayesTheoremPage() {
         </div>
       )}
 
-      <article className="bayes-widget">
-        <header className="bayes-widget__header">
-          <div className="bayes-widget__introduction">
+      <article className={styles['bayes-widget']}>
+        <header className={styles['bayes-widget__header']}>
+          <div className={styles['bayes-widget__introduction']}>
             <p className="eyebrow">
               확률과 통계
             </p>
@@ -122,7 +122,7 @@ export default function BayesTheoremPage() {
               베이즈 정리
             </h1>
 
-            <p className="bayes-widget__description">
+            <p className={styles['bayes-widget__description']}>
               세 확률을 움직여서 새로운 증거가 사건 A의
               확률을 어떻게 바꾸는지 확인해 보십시오.
             </p>
@@ -130,22 +130,22 @@ export default function BayesTheoremPage() {
 
           <MathFormula
             formula={bayesFormula}
-            className="bayes-widget__main-formula"
+            className={styles['bayes-widget__main-formula']}
           />
         </header>
 
-        <div className="bayes-widget__body">
+        <div className={styles['bayes-widget__body']}>
           <section
-            className="control-panel"
+            className={styles['control-panel']}
             aria-label="확률 조절 영역"
           >
-            <div className="section-heading">
+            <div className={styles['section-heading']}>
               <h2>
                 1. 확률 조절
               </h2>
 
               <button
-                className="reset-button"
+                className={styles['reset-button']}
                 type="button"
                 onClick={resetValues}
               >
@@ -174,13 +174,13 @@ export default function BayesTheoremPage() {
               onChange={setPBGivenNotA}
             />
 
-            <div className="formula-note">
+            <div className={styles['formula-note']}>
               <MathFormula
                 formula={evidenceFormula}
-                className="formula-note__formula"
+                className={styles['formula-note__formula']}
               />
 
-              <p className="formula-note__description">
+              <p className={styles['formula-note__description']}>
                 전체 증거 확률 P(B)는 A에서 나온 증거와
                 A가 아닌 경우에서 나온 증거를 합한 값입니다.
               </p>
@@ -188,15 +188,15 @@ export default function BayesTheoremPage() {
           </section>
 
           <section
-            className="result-panel"
+            className={styles['result-panel']}
             aria-label="계산 결과와 그래프"
           >
             <h2>
               2. 계산 결과
             </h2>
 
-            <div className="result-cards">
-              <div className="result-card">
+            <div className={styles['result-cards']}>
+              <div className={styles['result-card']}>
                 <span>
                   전체 증거 확률 P(B)
                 </span>
@@ -210,7 +210,9 @@ export default function BayesTheoremPage() {
                 </small>
               </div>
 
-              <div className="result-card result-card--primary">
+              <div
+                className={`${styles['result-card']} ${styles['result-card--primary']}`}
+              >
                 <span>
                   사후확률 P(A | B)
                 </span>
@@ -233,7 +235,7 @@ export default function BayesTheoremPage() {
               noEvidence={result.noEvidence}
             />
 
-            <div className="calculation-box">
+            <div className={styles['calculation-box']}>
               <p>
                 <span>
                   A에서 나온 증거:
@@ -282,7 +284,7 @@ export default function BayesTheoremPage() {
             </div>
 
             <p
-              className="interpretation"
+              className={styles.interpretation}
               aria-live="polite"
             >
               {result.posterior === null ? (
