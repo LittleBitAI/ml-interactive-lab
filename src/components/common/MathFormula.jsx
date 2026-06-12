@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useMemo } from 'react';
 import katex from 'katex';
 
 export default function MathFormula({
@@ -6,36 +6,30 @@ export default function MathFormula({
   className = '',
   displayMode = true,
 }) {
-  const containerRef = useRef(null);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    const container = containerRef.current;
-
-    if (!container) {
-      return;
-    }
-
+  const { html, errorMessage } = useMemo(() => {
     try {
-      katex.render(formula, container, {
-        displayMode,
-        throwOnError: true,
-        strict: false,
-      });
-
-      setErrorMessage('');
+      return {
+        html: katex.renderToString(formula, {
+          displayMode,
+          throwOnError: true,
+          strict: false,
+        }),
+        errorMessage: '',
+      };
     } catch (error) {
       console.error('수식 렌더링 오류:', error);
       console.error('문제가 발생한 수식:', formula);
 
-      container.textContent = '';
-      setErrorMessage(error.message);
+      return {
+        html: '',
+        errorMessage: error.message,
+      };
     }
   }, [formula, displayMode]);
 
   return (
     <div className={`math-formula ${className}`.trim()}>
-      <div ref={containerRef} />
+      <div dangerouslySetInnerHTML={{ __html: html }} />
 
       {errorMessage && (
         <div className="math-formula__error">
