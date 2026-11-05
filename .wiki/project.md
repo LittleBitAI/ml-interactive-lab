@@ -109,11 +109,14 @@ hand; that predates the registry-driven routes and is no longer needed.
   `live_cmd = "npm run build && node scripts/preview-owned.mjs start"`,
   which runs `vite preview --port 4173 --strictPort` and serves the built
   site at `http://localhost:4173/ml-interactive-lab/` the way GitHub Pages
-  does. The launcher records the pid it started in
+  does. Each start puts a fresh random tag on the server's own command line
+  (`node --title=preview-owned-<tag> ...`), records `{ pid, port, tag }` in
   `artifacts/preview-4173.json` and removes the record when that process
   exits, so a start that fails on a busy port records nothing.
-  `server_stop = "node scripts/preview-owned.mjs stop"` stops only that
-  recorded pid, and only while it still listens on 4173 with a vite preview
-  command line; another session's preview on the same port is left running.
+  `server_stop = "node scripts/preview-owned.mjs stop"` stops the recorded
+  pid only if its command line still carries that tag and is a vite preview
+  on 4173, whether it is still starting or already listening, and reports
+  success only once it is gone. A reused pid or another checkout's preview
+  never carries the tag and is left running, and the stale record is dropped.
   Its check is `node --test scripts/preview-owned.test.mjs` (Windows, after a
   build).
