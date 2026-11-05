@@ -103,5 +103,9 @@ hand; that predates the registry-driven routes and is no longer needed.
 - Deploy: every push to `main` (or a manual dispatch) runs
   `.github/workflows/deploy.yml` on Node 24: `npm ci`, `npm run lint`,
   `npm run build`, upload `dist/`, deploy to GitHub Pages.
-- `.wiki/adapter.toml` leaves `gate_cmd` and `live_cmd` empty, so the wiki
-  has no declared gate for this repo yet.
+- `.wiki/adapter.toml` declares `gate_cmd = "npm run lint && npm run build"`
+  (what CI runs before deploying) and
+  `live_cmd = "npm run build && npm run preview -- --port 4173 --strictPort"`,
+  which serves the built site at `http://localhost:4173/ml-interactive-lab/`
+  the way GitHub Pages does. `server_stop` stops only the process listening
+  on port 4173 whose command line is `vite ... preview --port 4173`.
