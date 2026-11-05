@@ -23,8 +23,10 @@ width; lint and build cannot see layout.
 Why. `.github/workflows/deploy.yml` runs `npm ci`, `npm run lint`
 (`deploy.yml:40-41`, added in commit `89901a2`), `npm run build` and the Pages
 deploy, on every push to `main` (`deploy.yml:4-6`). The scripts are in
-`package.json:6-11`; none of them runs tests. `.wiki/adapter.toml` leaves
-`gate_cmd` empty, so nothing else declares a gate.
+`package.json:6-11`; none of them runs tests. `.wiki/adapter.toml` declares
+the same gate as `gate_cmd = "npm run lint && npm run build"`, and
+`live_cmd = "npm run build && node scripts/preview-owned.mjs start"` (a
+`vite preview` on port 4173) for the preview check above.
 
 What goes wrong. A lint error such as a `react-hooks` violation stops the
 workflow before the build, and the previous deploy stays live while the push

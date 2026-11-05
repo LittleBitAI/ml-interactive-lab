@@ -1,8 +1,8 @@
 agents = ["claude", "codex"]
 
 [slots]
-gate_cmd = ""
+gate_cmd = "npm run lint && npm run build"
 review_dir = "artifacts/review"
 scratch_dirs = "artifacts/"
-live_cmd = ""
-server_stop = ""
+live_cmd = "npm run build && node scripts/preview-owned.mjs start"
+server_stop = "node scripts/preview-owned.mjs stop"

@@ -35,6 +35,7 @@ Vite 8 + React 19 (JSX, no TypeScript), `react-router` 7 with a hash router,
 | `eslint.config.js` | Lint rules (recommended, react-hooks, react-refresh), ignores `dist` |
 | `public/` | Static assets copied as is (`favicon.svg`, `icons.svg`) |
 | `src/` | All application code (below) |
+| `scripts/` | `preview-owned.mjs`: starts and stops this checkout's own `vite preview` (the adapter's `live_cmd` and `server_stop`), with its test |
 | `.github/workflows/deploy.yml` | CI: lint, build, deploy `dist/` to GitHub Pages |
 | `.claude/settings.json` | Agent permission denies (not part of the app) |
 | `.wiki/` | This wiki and its adapter (`.wiki/adapter.toml`) |
@@ -103,5 +104,19 @@ hand; that predates the registry-driven routes and is no longer needed.
 - Deploy: every push to `main` (or a manual dispatch) runs
   `.github/workflows/deploy.yml` on Node 24: `npm ci`, `npm run lint`,
   `npm run build`, upload `dist/`, deploy to GitHub Pages.
-- `.wiki/adapter.toml` leaves `gate_cmd` and `live_cmd` empty, so the wiki
-  has no declared gate for this repo yet.
+- `.wiki/adapter.toml` declares `gate_cmd = "npm run lint && npm run build"`
+  (what CI runs before deploying) and
+  `live_cmd = "npm run build && node scripts/preview-owned.mjs start"`,
+  which runs `vite preview --port 4173 --strictPort` and serves the built
+  site at `http://localhost:4173/ml-interactive-lab/` the way GitHub Pages
+  does. Each start puts a fresh random tag on the server's own command line
+  (`node --title=preview-owned-<tag> ...`), records `{ pid, port, tag }` in
+  `artifacts/preview-4173.json` and removes the record when that process
+  exits, so a start that fails on a busy port records nothing.
+  `server_stop = "node scripts/preview-owned.mjs stop"` stops the recorded
+  pid only if its command line still carries that tag and is a vite preview
+  on 4173, whether it is still starting or already listening, and reports
+  success only once it is gone. A reused pid or another checkout's preview
+  never carries the tag and is left running, and the stale record is dropped.
+  Its check is `node --test scripts/preview-owned.test.mjs` (Windows, after a
+  build).
