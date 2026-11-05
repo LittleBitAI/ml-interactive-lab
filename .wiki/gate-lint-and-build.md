@@ -25,8 +25,8 @@ Why. `.github/workflows/deploy.yml` runs `npm ci`, `npm run lint`
 deploy, on every push to `main` (`deploy.yml:4-6`). The scripts are in
 `package.json:6-11`; none of them runs tests. `.wiki/adapter.toml` declares
 the same gate as `gate_cmd = "npm run lint && npm run build"`, and
-`live_cmd = "npm run build && npm run preview -- --port 4173 --strictPort"`
-for the preview check above.
+`live_cmd = "npm run build && node scripts/preview-owned.mjs start"` (a
+`vite preview` on port 4173) for the preview check above.
 
 What goes wrong. A lint error such as a `react-hooks` violation stops the
 workflow before the build, and the previous deploy stays live while the push

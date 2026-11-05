@@ -4,5 +4,5 @@ agents = ["claude", "codex"]
 gate_cmd = "npm run lint && npm run build"
 review_dir = "artifacts/review"
 scratch_dirs = "artifacts/"
-live_cmd = "npm run build && npm run preview -- --port 4173 --strictPort"
-server_stop = "pwsh -NoProfile -Command 'Get-NetTCPConnection -LocalPort 4173 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique | ForEach-Object { $p = Get-CimInstance Win32_Process -Filter \"ProcessId=$_\"; if ($p.CommandLine -match \"vite.*preview.*--port 4173\") { Stop-Process -Id $_ -Force; \"stopped $_\" } else { \"left $_ alone: $($p.CommandLine)\" } }'"
+live_cmd = "npm run build && node scripts/preview-owned.mjs start"
+server_stop = "node scripts/preview-owned.mjs stop"

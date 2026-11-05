@@ -35,6 +35,7 @@ Vite 8 + React 19 (JSX, no TypeScript), `react-router` 7 with a hash router,
 | `eslint.config.js` | Lint rules (recommended, react-hooks, react-refresh), ignores `dist` |
 | `public/` | Static assets copied as is (`favicon.svg`, `icons.svg`) |
 | `src/` | All application code (below) |
+| `scripts/` | `preview-owned.mjs`: starts and stops this checkout's own `vite preview` (the adapter's `live_cmd` and `server_stop`), with its test |
 | `.github/workflows/deploy.yml` | CI: lint, build, deploy `dist/` to GitHub Pages |
 | `.claude/settings.json` | Agent permission denies (not part of the app) |
 | `.wiki/` | This wiki and its adapter (`.wiki/adapter.toml`) |
@@ -105,7 +106,14 @@ hand; that predates the registry-driven routes and is no longer needed.
   `npm run build`, upload `dist/`, deploy to GitHub Pages.
 - `.wiki/adapter.toml` declares `gate_cmd = "npm run lint && npm run build"`
   (what CI runs before deploying) and
-  `live_cmd = "npm run build && npm run preview -- --port 4173 --strictPort"`,
-  which serves the built site at `http://localhost:4173/ml-interactive-lab/`
-  the way GitHub Pages does. `server_stop` stops only the process listening
-  on port 4173 whose command line is `vite ... preview --port 4173`.
+  `live_cmd = "npm run build && node scripts/preview-owned.mjs start"`,
+  which runs `vite preview --port 4173 --strictPort` and serves the built
+  site at `http://localhost:4173/ml-interactive-lab/` the way GitHub Pages
+  does. The launcher records the pid it started in
+  `artifacts/preview-4173.json` and removes the record when that process
+  exits, so a start that fails on a busy port records nothing.
+  `server_stop = "node scripts/preview-owned.mjs stop"` stops only that
+  recorded pid, and only while it still listens on 4173 with a vite preview
+  command line; another session's preview on the same port is left running.
+  Its check is `node --test scripts/preview-owned.test.mjs` (Windows, after a
+  build).
