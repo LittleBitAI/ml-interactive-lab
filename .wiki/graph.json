@@ -7,18 +7,58 @@
    "a": "README.md",
    "b": "README-KO.md",
    "kind": "link"
+  },
+  {
+   "a": ".wiki/embed-flag-before-hash",
+   "b": "how_to.md",
+   "kind": "reads",
+   "cross": true
+  },
+  {
+   "a": ".wiki/grid-tracks-min-zero",
+   "b": "how_to.md",
+   "kind": "reads",
+   "cross": true
+  },
+  {
+   "a": ".wiki/project",
+   "b": "README-KO.md",
+   "kind": "reads",
+   "cross": true
+  },
+  {
+   "a": ".wiki/project",
+   "b": "README.md",
+   "kind": "reads",
+   "cross": true
+  },
+  {
+   "a": ".wiki/project",
+   "b": "how_to.md",
+   "kind": "reads",
+   "cross": true
+  },
+  {
+   "a": ".wiki/register-widgets-in-registry",
+   "b": "how_to.md",
+   "kind": "reads",
+   "cross": true
+  },
+  {
+   "a": ".wiki/vite-base-and-hash-router",
+   "b": "how_to.md",
+   "kind": "reads",
+   "cross": true
   }
  ],
- "orphans": [
-  "how_to.md"
- ],
+ "orphans": [],
  "counts": {
   "docs": 3,
-  "linked": 1,
-  "read": 0,
-  "orphans": 1,
-  "pages": 0,
-  "decisions": 0,
-  "injectable_decisions": 0
+  "linked": 0,
+  "read": 3,
+  "orphans": 0,
+  "pages": 7,
+  "decisions": 24,
+  "injectable_decisions": 2
  }
 }
